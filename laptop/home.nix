@@ -16,8 +16,7 @@
     allowUnfree = true;
   };
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
+  # Define packages for installation
   home.packages = [
     
     # Compilers/Libraries

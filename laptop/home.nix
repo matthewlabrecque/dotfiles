@@ -33,12 +33,14 @@
     pkgs.lazygit
     pkgs.neovim
     pkgs.rclone
+    pkgs.starship
     pkgs.tailscale
     pkgs.zellij
     
     # GUI
     pkgs.anki
     pkgs.discord
+    pkgs.flameshot
     pkgs.fractal
     pkgs.gnome-boxes
     pkgs.localsend
@@ -48,29 +50,17 @@
     pkgs.qbittorrent
     pkgs.telegram-desktop
     pkgs.vlc
-    pkgs.vscode
+    pkgs.vscodium
 
+    # Other
+    pkgs.nerd-fonts.blex-mono
   ];
 
   # Dotfile management
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
+  
   };
 
-  # Manage environment
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-  };
-
-  # Let Home Manager install and manage itself.
+# Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }

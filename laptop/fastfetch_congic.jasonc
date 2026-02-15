@@ -30,7 +30,8 @@
     {
       "type": "packages",
       "key": "├󰏖",
-      "keyColor": "yellow"
+      "keyColor": "yellow",
+      "format": "{5} (rpm), {nix-all} (nix), {flatpak-all} (flatpak)"
     },
     {
       "type": "shell",

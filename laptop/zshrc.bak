@@ -16,6 +16,7 @@ fi
 
 alias ll="ls -lF"
 alias vim="nvim"
+alias upgrade-nix="determinate-nixd upgrade"
 
 # Enable Zellij
 if [[ -z "$ZELLIJ" ]]; then
@@ -34,3 +35,6 @@ eval "$(starship init zsh)"
 
 # opencode
 export PATH=/home/matthew/.opencode/bin:$PATH
+
+# Nix
+export XDG_DATA_DIRS="$HOME/.nix-profile/share:$XDG_DATA_DIRS"

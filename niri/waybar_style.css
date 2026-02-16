@@ -1,0 +1,202 @@
+/* Catppuccin Frappe Color Palette */
+@define-color rosewater #f2d5cf;
+@define-color flamingo #eebebe;
+@define-color pink #f4b8e4;
+@define-color mauve #ca9ee6;
+@define-color red #e78284;
+@define-color maroon #ea999c;
+@define-color peach #ef9f76;
+@define-color yellow #e5c890;
+@define-color green #a6d189;
+@define-color teal #81c8be;
+@define-color sky #99d1db;
+@define-color sapphire #85c1dc;
+@define-color blue #8caaee;
+@define-color lavender #babbf1;
+@define-color text #c6d0f5;
+@define-color subtext1 #b5bfe2;
+@define-color subtext0 #a5adce;
+@define-color overlay2 #949cbb;
+@define-color overlay1 #838ba7;
+@define-color overlay0 #737994;
+@define-color surface2 #626880;
+@define-color surface1 #51576d;
+@define-color surface0 #414559;
+@define-color base #303446;
+@define-color mantle #292c3c;
+@define-color crust #232634;
+
+/* General Styling */
+* {
+    border: none;
+    border-radius: 0;
+    font-family: "JetBrains Mono", "Iosevka Nerd Font", monospace;
+    font-size: 11px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: @crust;
+    color: @text;
+    transition: background-color 0.5s ease;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+/* Left Modules - Workspaces */
+#workspaces {
+    background-color: @base;
+    border-radius: 4px;
+    margin: 2px 0;
+    padding: 2px 4px;
+}
+
+#workspaces button {
+    padding: 2px 6px;
+    margin: 0 1px;
+    background-color: @surface0;
+    color: @subtext1;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+#workspaces button:hover {
+    background-color: @surface2;
+    color: @text;
+}
+
+#workspaces button.active {
+    background-color: @mauve;
+    color: @crust;
+    font-weight: bold;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: @crust;
+}
+
+#workspaces button.visible {
+    background-color: @sapphire;
+    color: @crust;
+}
+
+/* Center Modules - Clock */
+#clock {
+    background-color: @base;
+    color: @text;
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin: 2px 0;
+    font-weight: 500;
+}
+
+/* Right Modules */
+#battery,
+#pulseaudio,
+#network,
+#tray {
+    background-color: @base;
+    padding: 2px 6px;
+    margin: 2px 1px;
+    border-radius: 4px;
+    color: @text;
+}
+
+/* Battery Styling */
+#battery {
+    color: @green;
+}
+
+#battery.charging {
+    color: @green;
+}
+
+#battery.plugged {
+    color: @green;
+}
+
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @crust;
+    animation: blink 1s steps(12) infinite;
+}
+
+#battery.warning:not(.charging) {
+    color: @yellow;
+}
+
+/* Audio Styling */
+#pulseaudio {
+    color: @sky;
+}
+
+#pulseaudio.muted {
+    color: @overlay1;
+}
+
+/* Network Styling */
+#network {
+    color: @sapphire;
+}
+
+#network.disconnected {
+    color: @overlay0;
+}
+
+#network.wifi {
+    color: @lavender;
+}
+
+#network.ethernet {
+    color: @blue;
+}
+
+/* Tray Styling */
+#tray {
+    padding: 2px 4px;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+    background-color: @peach;
+    color: @crust;
+}
+
+/* Tooltip Styling */
+tooltip {
+    background-color: @mantle;
+    border: 1px solid @surface0;
+    border-radius: 4px;
+}
+
+tooltip label {
+    color: @text;
+    padding: 2px 6px;
+}
+
+/* Animations */
+@keyframes blink {
+    to {
+        background-color: @maroon;
+    }
+}
+
+/* Separators */
+.modules-right > widget:first-child > #workspaces {
+    margin-left: 0;
+}
+
+.modules-right > widget:last-child > #tray {
+    margin-right: 2px;
+}

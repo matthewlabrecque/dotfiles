@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -48,6 +48,7 @@
     pkgs.mullvad-vpn
     # pkgs.obsidian # Requires OpenGL
     pkgs.obs-studio
+    pkgs.prismlauncher
     pkgs.qbittorrent
     pkgs.telegram-desktop
     pkgs.vlc
@@ -77,11 +78,20 @@
       vim = "nvim";
       upgrade-nix = "determinate-nixd upgrade";
     };
-    initExtra = ''
+    initContent = ''
       # opencode PATH
       export PATH=/home/matthew/.opencode/bin:$PATH
       [[ $- == *i* ]] && eval "$(starship init zsh)"
     '';
+  };
+
+  # Git configuration
+  programs.git = {
+    enable = true;
+    settings = {
+      user.name = "Matthew Labrecque";
+      user.email = "mail@mlabrecque.dev";
+    };
   };
 
   # Fastfetch Configuration

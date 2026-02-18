@@ -20,7 +20,7 @@
   home.packages = [
     
     # Compilers/Libraries
-    pkgs.gcc
+    pkgs.clang
     pkgs.go
     pkgs.openjdk
     pkgs.nodejs
@@ -41,7 +41,6 @@
     pkgs.anki
     # pkgs.brave # Compatability issue
     pkgs.discord
-    pkgs.flameshot
     pkgs.fractal
     pkgs.gnome-boxes
     pkgs.localsend
@@ -49,8 +48,10 @@
     # pkgs.obsidian # Requires OpenGL
     pkgs.obs-studio
     pkgs.prismlauncher
+    # pkgs.protonmail-desktop # Display issue
     pkgs.qbittorrent
     pkgs.telegram-desktop
+    pkgs.virt-manager
     pkgs.vlc
     pkgs.vscodium
 
@@ -85,12 +86,11 @@
     '';
   };
 
-  # Git configuration
-  programs.git = {
-    enable = true;
-    settings = {
-      user.name = "Matthew Labrecque";
-      user.email = "mail@mlabrecque.dev";
+  # VirtManager Configuration
+  dconf.settings = {
+    "org/virt-manager/virt-manager/connections" = {
+      autoconnect = [ "qemu:///system" ];
+      uris = [ "qemu:///system" ];
     };
   };
 
@@ -113,7 +113,7 @@
       };
       modules = [
         "break"
-        "title"
+        "title" 
         "separator"
         {
           type = "os";

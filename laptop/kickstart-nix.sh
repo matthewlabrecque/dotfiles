@@ -25,6 +25,8 @@ home-manager switch -b backup
 sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -y
 sudo dnf install kitty brave-browser -y
 
+# TODO: Enable underlying VM drivers
+
 # Install OpenCode via curl
 curl -fsSL https://opencode.ai/install | bash
 

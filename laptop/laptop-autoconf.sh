@@ -1,12 +1,12 @@
 #!/bin/bash
 
-TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "nodejs" "python3-pip" "rustup")
+TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "julia" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "qbittorrent" "vlc")
+GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
 
-OTHER_PACKAGES=("fzf")
+OTHER_PACKAGES=("fzf" "gh")
 
 FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.telegram.desktop")
 
@@ -51,9 +51,9 @@ sudo dnf install dnf-plugins-core -y
 # Add in any required repositories
 echo "Adding in third-party repositories"
 sudo dnf copr enable atim/starship
-sudo dnf copr enable phracek/PyCharm
 sudo dnf copr enable varlad/zellij
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
 sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
 [gitlab.com_paulcarroty_vscodium_repo]
 name=gitlab.com_paulcarroty_vscodium_repo
@@ -73,7 +73,7 @@ sudo dnf check-update
 ###    INSTALL    ###
 #####################
 
-# Install dnf packages
+# Install packages
 echo "Installing core compilers and toolchains"
 for package in "${TOOLCHAINS[@]}"; do
   sudo dnf install "$package" -y
@@ -94,7 +94,7 @@ for package in "${GUI_APPS[@]}"; do
   sudo dnf install "$package" -y
 done
 
-# Install flathub packages
+# Install flatpaks
 echo "Installing Flatpaks"
 for package in "${FLATPAKS[@]}"; do
   flatpak install "$package" -y
@@ -104,8 +104,8 @@ done
 echo "Installing OpenCode"
 curl -fsSL https://opencode.ai/install | bash
 
-# Add in NerdFonts Manager Utility
-echo "Installing NerdFonts"
+# Add the IBM Plex nerd font
+echo "Adding IBM Plex Mono Nerd Font"
 wget -P /home/$USER/Downloads https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/IBMPlexMono.zip
 mkdir -p /home/$USER/Downloads/BlexMono
 unzip /home/$USER/Downloads/IBMPlexMono.zip -d /home/$USER/Downloads/BlexMono
@@ -117,30 +117,6 @@ fc-cache -fv
 #####################
 
 # Configure the terminal and shell environment
-cat >>/home/$USER/.config/kitty/kitty.conf <<'EOF'
-shell /usr/bin/zsh
-
-# Optional: Performance optimizations
-repaint_delay 10
-input_delay 3
-sync_to_monitor yes
-
-# Optional: Hide Kitty's tab bar since Zellij handles tabs
-tab_bar_style hidden
-
-# BEGIN_KITTY_FONTS
-font_family      family="BlexMono Nerd Font"
-bold_font        auto
-italic_font      auto
-bold_italic_font auto
-# END_KITTY_FONTS
-
-# General customization
-font_size 12.0
-hide_window_decorations no
-background_opacity 0.9
-EOF
-
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -149,6 +125,22 @@ starship preset gruvbox-rainbow -o ~/.config/starship.toml
 # Configure Neovim with LazyVim
 git clone https://github.com/LazyVim/starter ~/.config/nvim
 rm -rf ~/.config/nvim/.git
+
+# Set LazyVim color theme to Gruvbox
+cat >>/home/$USER/.config/nvim/lua/plugins/colorscheme.lua <<EOF
+return {
+  -- add gruvbox
+  { "ellisonleao/gruvbox.nvim" },
+
+  -- Configure LazyVim to load gruvbox
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "gruvbox",
+    },
+  }
+}
+EOF
 
 # Configure FastFetch
 mkdir -p /home/$USER/.config/fastfetch
@@ -174,6 +166,7 @@ mkdir -p /home/$USER/ObsidianVault
 
 # Uninstall unused applications
 sudo dnf remove firefox
+#TODO: Figure out how to rip out the preinstalled GNOME apps
 
 # Reboot the system
 sudo reboot now

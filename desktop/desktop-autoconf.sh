@@ -4,7 +4,7 @@ TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "nodejs" "python3-pip" "r
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "qbittorrent" "steam" "virt-manager" "vlc")
+GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "virt-manager" "vlc")
 
 OTHER_PACKAGES=("fzf" "qemu-kvm" "qemu-img" "libvirt")
 
@@ -54,6 +54,7 @@ sudo dnf copr enable atim/starship
 sudo dnf copr enable phracek/PyCharm
 sudo dnf copr enable varlad/zellij
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
 sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
 [gitlab.com_paulcarroty_vscodium_repo]
 name=gitlab.com_paulcarroty_vscodium_repo

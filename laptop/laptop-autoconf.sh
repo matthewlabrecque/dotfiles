@@ -165,8 +165,7 @@ mkdir -p /home/$USER/ObsidianVault
 #####################
 
 # Uninstall unused applications
-sudo dnf remove firefox
-#TODO: Figure out how to rip out the preinstalled GNOME apps
+sudo dnf remove firefox gnome-calendar gnome-clocks gnome-weather gnome-maps gnome-contacts gnome-boxes -y
 
 # Reboot the system
 sudo reboot now

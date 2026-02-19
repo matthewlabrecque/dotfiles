@@ -4,11 +4,11 @@ TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "nodejs" "python3-pip" "r
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "qbittorrent" "vlc")
+GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "qbittorrent" "steam" "virt-manager" "vlc")
 
-OTHER_PACKAGES=("fzf")
+OTHER_PACKAGES=("fzf" "qemu-kvm" "qemu-img" "libvirt")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.telegram.desktop")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.prismlauncher.PrismLauncher" "org.telegram.desktop")
 
 #####################
 ###     SETUP     ###
@@ -37,7 +37,7 @@ cat <<EOF
 
 "Welcome, I've been waiting for you..."
 
-Jarvis, just set up the laptop you dipshit.
+Jarvis, set up my computer you dipshit.
 EOF
 
 sleep 10

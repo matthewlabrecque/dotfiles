@@ -8,7 +8,7 @@ GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullva
 
 OTHER_PACKAGES=("fzf" "gh")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.telegram.desktop")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "in.cinny.Cinny" "org.telegram.desktop")
 
 #####################
 ###     SETUP     ###

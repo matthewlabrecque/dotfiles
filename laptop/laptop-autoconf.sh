@@ -1,8 +1,8 @@
 #!/bin/bash
 
-TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "julia" "rustup")
+TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
-TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
+TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
 GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
 
@@ -50,10 +50,11 @@ sudo dnf install dnf-plugins-core -y
 
 # Add in any required repositories
 echo "Adding in third-party repositories"
-sudo dnf copr enable atim/starship
-sudo dnf copr enable varlad/zellij
-sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo
+sudo dnf copr enable atim/starship -y
+sudo dnf copr enable varlad/zellij -y
+sudo dnf copr enable scottames/ghostty -y
+sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -y
+sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -y
 sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
 [gitlab.com_paulcarroty_vscodium_repo]
 name=gitlab.com_paulcarroty_vscodium_repo
@@ -67,7 +68,7 @@ EOF
 
 # Perform a database update
 echo "Updating database"
-sudo dnf check-update
+sudo dnf check-update -y
 
 #####################
 ###    INSTALL    ###
@@ -121,6 +122,7 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
+#TODO: Curl the ghostty config file
 
 # Configure Neovim with LazyVim
 git clone https://github.com/LazyVim/starter ~/.config/nvim

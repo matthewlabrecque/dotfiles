@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TOOLCHAINS=("clang" "gcc" "go" "java-21-openjdk-devel" "nodejs" "python3-pip" "rustup")
+TOOLCHAINS=("clang" "gcc" "go" "julia" "nodejs" "python3-pip" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
@@ -8,7 +8,7 @@ GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullva
 
 OTHER_PACKAGES=("fzf" "qemu-kvm" "qemu-img" "libvirt")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.prismlauncher.PrismLauncher" "org.telegram.desktop")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "in.cinny.Cinny" "org.prismlauncher.PrismLauncher" "org.telegram.desktop")
 
 #####################
 ###     SETUP     ###
@@ -105,8 +105,8 @@ done
 echo "Installing OpenCode"
 curl -fsSL https://opencode.ai/install | bash
 
-# Add in NerdFonts Manager Utility
-echo "Installing NerdFonts"
+# Add the IBM Plex nerd font
+echo "Adding IBM Plex Mono Nerd Font"
 wget -P /home/$USER/Downloads https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/IBMPlexMono.zip
 mkdir -p /home/$USER/Downloads/BlexMono
 unzip /home/$USER/Downloads/IBMPlexMono.zip -d /home/$USER/Downloads/BlexMono
@@ -118,43 +118,31 @@ fc-cache -fv
 #####################
 
 # Configure the terminal and shell environment
-cat >>/home/$USER/.config/kitty/kitty.conf <<'EOF'
-shell /usr/bin/zsh
-
-# Optional: Performance optimizations
-repaint_delay 10
-input_delay 3
-sync_to_monitor yes
-
-# Optional: Hide Kitty's tab bar since Zellij handles tabs
-tab_bar_style hidden
-
-# BEGIN_KITTY_FONTS
-font_family      family="BlexMono Nerd Font"
-bold_font        auto
-italic_font      auto
-bold_italic_font auto
-# END_KITTY_FONTS
-
-# General customization
-font_size 12.0
-hide_window_decorations no
-background_opacity 0.9
-EOF
-
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
+curl -o /home/$USER/.config/ghostty/config https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/universal/ghostty_config.txt
 
 # Configure Neovim with LazyVim
 git clone https://github.com/LazyVim/starter ~/.config/nvim
 rm -rf ~/.config/nvim/.git
 
-# Configure FastFetch
-mkdir -p /home/$USER/.config/fastfetch
-curl -o /home/$USER/.config/fastfetch/config.jsonc https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/global/fastfetch_config.txt
-curl -o /home/$USER/.config/fastfetch/thinkpad-v.txt https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/laptop/thinkpad-v.txt
+# Set LazyVim color theme to Gruvbox
+cat >>/home/$USER/.config/nvim/lua/plugins/colorscheme.lua <<EOF
+return {
+  -- add gruvbox
+  { "ellisonleao/gruvbox.nvim" },
+
+  -- Configure LazyVim to load gruvbox
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "gruvbox",
+    },
+  }
+}
+EOF
 
 # Grab a couple GNOME Extensions, but enclose in trigger for if we're on GNOME
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
@@ -174,7 +162,7 @@ mkdir -p /home/$USER/ObsidianVault
 #####################
 
 # Uninstall unused applications
-sudo dnf remove firefox
+sudo dnf remove firefox gnome-calendar gnome-clocks gnome-weather gnome-maps gnome-contacts gnome-boxes -y
 
 # Reboot the system
 sudo reboot now

@@ -4,7 +4,7 @@ TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
+GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
 
 OTHER_PACKAGES=("fzf" "gh")
 
@@ -122,7 +122,7 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
-#TODO: Curl the ghostty config file
+curl -o /home/$USER/.config/ghostty/config https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/universal/ghostty_config.txt
 
 # Configure Neovim with LazyVim
 git clone https://github.com/LazyVim/starter ~/.config/nvim
@@ -146,8 +146,8 @@ EOF
 
 # Configure FastFetch
 mkdir -p /home/$USER/.config/fastfetch
-curl -o /home/$USER/.config/fastfetch/config.jsonc https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/global/fastfetch_config.txt
-curl -o /home/$USER/.config/fastfetch/thinkpad-v.txt https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/laptop/thinkpad-v.txt
+curl -o /home/$USER/.config/fastfetch/config.jsonc https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/universal/fastfetch_config.txt
+curl -o /home/$USER/.config/fastfetch/thinkpad-v.txt https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/laptop/thinkpad-v.txt
 
 # Grab a couple GNOME Extensions, but enclose in trigger for if we're on GNOME
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then

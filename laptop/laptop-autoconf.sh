@@ -123,7 +123,7 @@ chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone -q https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
-curl -o /home/$USER/.config/ghostty/config https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/general/ghostty_config.txt
+wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/ghostty_config.txt >/home/$USER/.config/ghostty/config
 
 # Configure Neovim with LazyVim
 git clone -q https://github.com/LazyVim/starter ~/.config/nvim
@@ -147,8 +147,8 @@ EOF
 
 # Configure FastFetch
 mkdir -p /home/$USER/.config/fastfetch
-curl -o /home/$USER/.config/fastfetch/config.jsonc https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/general/fastfetch_config.txt
-curl -o /home/$USER/.config/fastfetch/thinkpad-v.txt https://gitlab.com/kanixos/dotfiles/-/blob/bbe8260be71219910d98f8a6a3e150dca702f572/laptop/thinkpad-v.txt
+wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/fastfetch_config.txt >/home/$USER/.config/fastfetch/config.jsonc
+wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/laptop/thinkpad-v.txt >/home/$USER/.config/fastfetch/thinkpad-v.txt
 
 # GNOME Specific Configurations
 # Mainly just setting some keybinds

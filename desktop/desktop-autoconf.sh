@@ -4,11 +4,11 @@ TOOLCHAINS=("clang" "gcc" "go" "julia" "nodejs" "python3-pip" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "fractal" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "virt-manager" "vlc")
+GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "virt-manager" "vlc")
 
 OTHER_PACKAGES=("fzf" "qemu-kvm" "qemu-img" "libvirt")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "in.cinny.Cinny" "org.prismlauncher.PrismLauncher" "org.telegram.desktop")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot" "org.prismlauncher.PrismLauncher")
 
 #####################
 ###     SETUP     ###

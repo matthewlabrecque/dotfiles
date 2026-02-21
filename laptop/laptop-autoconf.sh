@@ -6,13 +6,11 @@ TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "
 
 GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
 
+KERNEL_PACKAGES=("kernel-cachyos" "kernel-cachyos-devel-matched" "scx-scheds" "scx-tools" "scx-manager")
+
 OTHER_PACKAGES=("fzf" "gh")
 
 FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot")
-
-#####################
-###     SETUP     ###
-#####################
 
 cat <<EOF
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡤⠤⠤⠤⠤⠤⢤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -42,6 +40,10 @@ EOF
 
 sleep 10
 
+#####################
+###     SETUP     ###
+#####################
+
 # Enable Flathub and RPM Fusion
 echo "Enabling Flathub and RPM Fusion repos"
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm -yq
@@ -53,6 +55,8 @@ echo "Adding in third-party repositories"
 sudo dnf copr enable atim/starship -yq
 sudo dnf copr enable varlad/zellij -yq
 sudo dnf copr enable scottames/ghostty -yq
+sudo dnf copr enable bieszczaders/kernel-cachyos-addons -yq
+sudo dnf copr enable bieszczaders/kernel-cachyos -yq
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq
 sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
@@ -68,11 +72,19 @@ EOF
 
 # Perform a database update
 echo "Updating database"
-sudo dnf check-update -yq
+sudo dnf check-update --refresh -yq
 
 #####################
 ###    INSTALL    ###
 #####################
+
+# Install Kernel
+echo "Installing CachyOS Kernel"
+for package in "${KERNEL_PACKAGES[@]}"; do
+  sudo dnf install "$package" -yq
+done
+sudo dnf swap zram-generator-defaults cachyos-settings -yq
+sudo dracut -f
 
 # Install packages
 echo "Installing core compilers and toolchains"
@@ -117,6 +129,17 @@ fc-cache -fv
 #####################
 ###   CONFIGURE   ###
 #####################
+
+# Configure Fedora to use CachyOS Kernel
+sudo setsebool -P domain_kernel_load_modules on
+mkdir -p /etc/kernel/postinst.d
+sudo tee -a /etc/kernel/postinst.d/99-default <<'EOF'
+#!/bin/sh
+set -e
+grubby --set-default=/boot/$(ls /boot | grep vmlinuz.*cachy | sort -V | tail -1)
+EOF
+sudo chown root:root /etc/kernel/postinst.d/99-default
+sudo chmod u+rx /etc/kernel/postinst.d/99-default
 
 # Configure the terminal and shell environment
 chsh -s $(which zsh)

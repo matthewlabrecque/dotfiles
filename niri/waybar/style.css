@@ -1,0 +1,32 @@
+* {
+  font-family: "Adwaita", sans-serif;
+  font-size: 14px;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #ffffff;
+}
+
+#workspaces button {
+  padding: 0 8px;
+  color: #ffffff;
+}
+
+#workspaces button.active {
+  background: #333333;
+}
+
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#bluetooth,
+#power-profiles-daemon,
+#custom-power,
+#tray {
+  padding: 0 10px;
+}

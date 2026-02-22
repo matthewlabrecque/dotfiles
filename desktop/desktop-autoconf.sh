@@ -2,7 +2,7 @@
 
 TOOLCHAINS=("clang" "gcc" "go" "julia" "nodejs" "python3-pip" "rustup")
 
-TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
+TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zsh")
 
 GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "virt-manager" "vlc")
 
@@ -51,7 +51,6 @@ sudo dnf install dnf-plugins-core -yq
 # Add in any required repositories
 echo "Adding in third-party repositories"
 sudo dnf copr enable atim/starship -yq
-sudo dnf copr enable varlad/zellij -yq
 sudo dnf copr enable scottames/ghostty -yq
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq

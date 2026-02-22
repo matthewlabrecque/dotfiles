@@ -2,11 +2,9 @@
 
 TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
-TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zellij" "zsh")
+TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
 
 GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
-
-KERNEL_PACKAGES=("kernel-cachyos" "kernel-cachyos-devel-matched" "scx-scheds" "scx-tools" "scx-manager")
 
 OTHER_PACKAGES=("fzf" "gh")
 
@@ -53,10 +51,7 @@ sudo dnf install dnf-plugins-core -yq
 # Add in any required repositories
 echo "Adding in third-party repositories"
 sudo dnf copr enable atim/starship -yq
-sudo dnf copr enable varlad/zellij -yq
 sudo dnf copr enable scottames/ghostty -yq
-sudo dnf copr enable bieszczaders/kernel-cachyos-addons -yq
-sudo dnf copr enable bieszczaders/kernel-cachyos -yq
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq
 sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
@@ -77,14 +72,6 @@ sudo dnf check-update --refresh -yq
 #####################
 ###    INSTALL    ###
 #####################
-
-# Install Kernel
-echo "Installing CachyOS Kernel"
-for package in "${KERNEL_PACKAGES[@]}"; do
-  sudo dnf install "$package" -yq
-done
-sudo dnf swap zram-generator-defaults cachyos-settings -yq
-sudo dracut -f
 
 # Install packages
 echo "Installing core compilers and toolchains"
@@ -110,7 +97,7 @@ done
 # Install flatpaks
 echo "Installing Flatpaks"
 for package in "${FLATPAKS[@]}"; do
-  flatpak install "$package" -yq
+  flatpak install flathub "$package" -y
 done
 
 # Install any shell scripts I use
@@ -130,23 +117,12 @@ fc-cache -fv
 ###   CONFIGURE   ###
 #####################
 
-# Configure Fedora to use CachyOS Kernel
-sudo setsebool -P domain_kernel_load_modules on
-mkdir -p /etc/kernel/postinst.d
-sudo tee -a /etc/kernel/postinst.d/99-default <<'EOF'
-#!/bin/sh
-set -e
-grubby --set-default=/boot/$(ls /boot | grep vmlinuz.*cachy | sort -V | tail -1)
-EOF
-sudo chown root:root /etc/kernel/postinst.d/99-default
-sudo chmod u+rx /etc/kernel/postinst.d/99-default
-
 # Configure the terminal and shell environment
-chsh -s $(which zsh)
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sudo chsh -s $(which zsh)
+RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone -q https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
-wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/ghostty_config.txt >/home/$USER/.config/ghostty/config
+wget -O /home/$USER/.config/ghostty/config https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/ghostty_config.txt
 
 # Configure Neovim with LazyVim
 git clone -q https://github.com/LazyVim/starter ~/.config/nvim
@@ -170,14 +146,15 @@ EOF
 
 # Configure FastFetch
 mkdir -p /home/$USER/.config/fastfetch
-wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/fastfetch_config.txt >/home/$USER/.config/fastfetch/config.jsonc
-wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/laptop/thinkpad-v.txt >/home/$USER/.config/fastfetch/thinkpad-v.txt
+wget -O /home/$USER/.config/fastfetch/config.jsonc https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/fastfetch_config.txt
+wget -O /home/$USER/.config/fastfetch/thinkpad-v.txt https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/laptop/thinkpad-v.txt
 
 # GNOME Specific Configurations
 # Mainly just setting some keybinds
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
   echo "GNOME Desktop Environment detected, performing GNOME configurations"
   for i in {1..9}; do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
   done
   gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
@@ -197,7 +174,7 @@ mkdir -p /home/$USER/ObsidianVault
 sudo rm -rf /tmp/font
 
 # Uninstall unused applications
-sudo dnf remove firefox -y
+sudo dnf remove firefox alacritty -y
 
 # GNOME Specific Cleanup (A lot of these applications are installed by default)
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then

@@ -10,3 +10,7 @@ cp config.kdl /home/"$USER"/.config/niri/
 # Copy the Waybar configuration files
 mkdir -p /home/"$USER"/.config/waybar
 cp waybar/* /home/"$USER"/.config/waybar
+
+# Copy the rofi config file
+mkdir -p /home/"$USER"/.config/rofi
+cp config.rasi /home/"$USER"/.config/rofi

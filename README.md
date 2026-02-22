@@ -4,7 +4,7 @@ This repository keeps my personal dotfiles and autoconfiguration scripts for all
 
 ## Laptop autoconfiguration
 
-The laptop configuration script installs a set of packages/software that I use for school/college, and installs Niri as a window manager. No gaming software is installed on this system.
+My laptop configuration installs Arch Linux with the Niri scrolling window manager, and a suite of packages that I use for school. This laptop doesn't have any gaming stuff on it.
 
 ## Desktop autoconfiguration
 

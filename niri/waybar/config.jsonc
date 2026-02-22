@@ -40,6 +40,7 @@
     // }
   },
   "clock": {
+    "format": "{:%A %H:%M}",
     "timezone": "America/New_York"
   },
   "battery": {
@@ -50,9 +51,9 @@
     },
     "format": "{capacity}% {icon}",
     "format-full": "{capacity}% {icon}",
-    "format-charging": "{capacity}% ",
-    "format-plugged": "{capacity}% ",
-    "format-alt": "{time} {icon}",
+    "format-charging": "{capacity}% ",
+    //"format-plugged": "{capacity}% ",
+    //"format-alt": "{time} {icon}",
     // "format-good": "", // An empty format will hide the module
     // "format-full": "",
     "format-icons": [
@@ -96,7 +97,7 @@
     "format": "{icon}",
     "format-bluetooth": "{volume}% {icon} {format_source}",
     "format-bluetooth-muted": " {icon} {format_source}",
-    "format-muted": "",
+    "format-muted": "",
     "format-source": "{volume}% ",
     "format-source-muted": "",
     "format-icons": {

@@ -2,9 +2,9 @@
 
 TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
-TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
+TERMINAL_APPLICATIONS=("btop" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "vlc")
+GUI_APPS=("brave-browser" "mullvad-vpn" "qbittorrent" "vlc")
 
 OTHER_PACKAGES=("fzf" "gh")
 
@@ -54,16 +54,6 @@ sudo dnf copr enable atim/starship -yq
 sudo dnf copr enable scottames/ghostty -yq
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq
-sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
-[gitlab.com_paulcarroty_vscodium_repo]
-name=gitlab.com_paulcarroty_vscodium_repo
-baseurl=https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
-metadata_expire=1h
-EOF
 
 # Perform a database update
 echo "Updating database"
@@ -122,7 +112,7 @@ sudo chsh -s $(which zsh)
 RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone -q https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 starship preset gruvbox-rainbow -o ~/.config/starship.toml
-wget -O /home/$USER/.config/ghostty/config https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/ghostty_config.txt
+wget -O /home/$USER/.config/ghostty/config https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/general/ghostty_config.txt
 
 # Configure Neovim with LazyVim
 git clone -q https://github.com/LazyVim/starter ~/.config/nvim
@@ -146,8 +136,8 @@ EOF
 
 # Configure FastFetch
 mkdir -p /home/$USER/.config/fastfetch
-wget -O /home/$USER/.config/fastfetch/config.jsonc https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/general/fastfetch_config.txt
-wget -O /home/$USER/.config/fastfetch/thinkpad-v.txt https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6aef409fd2f/laptop/thinkpad-v.txt
+wget -O /home/$USER/.config/fastfetch/config.jsonc https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/general/fastfetch_config.txt
+wget -O /home/$USER/.config/fastfetch/thinkpad-v.txt https://raw.githubusercontent.com/matthewlabrecque/dotfiles/refs/heads/main/laptop/thinkpad-v.txt
 
 # GNOME Specific Configurations
 # Mainly just setting some keybinds
@@ -161,8 +151,7 @@ if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
 fi
 
 # Create my special directories
-mkdir -p /home/$USER/repos/personal
-mkdir -p /home/$USER/repos/ai-foundry
+mkdir -p /home/$USER/repos
 mkdir -p /home/$USER/University
 mkdir -p /home/$USER/ObsidianVault
 
@@ -174,7 +163,7 @@ mkdir -p /home/$USER/ObsidianVault
 sudo rm -rf /tmp/font
 
 # Uninstall unused applications
-sudo dnf remove firefox alacritty -y
+sudo dnf remove firefox -y
 
 # GNOME Specific Cleanup (A lot of these applications are installed by default)
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then

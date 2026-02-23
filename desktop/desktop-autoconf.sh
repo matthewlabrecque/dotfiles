@@ -1,12 +1,12 @@
 #!/bin/bash
 
-TOOLCHAINS=("clang" "gcc" "go" "julia" "nodejs" "python3-pip" "rustup")
+TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
-TERMINAL_APPLICATIONS=("btop" "distrobox" "fastfetch" "git" "kitty" "neovim" "rclone" "starship" "tailscale" "zsh")
+TERMINAL_APPLICATIONS=("btop" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
 
-GUI_APPS=("brave-browser" "codium" "dconf-editor" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "virt-manager" "vlc")
+GUI_APPS=("brave-browser" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "vlc")
 
-OTHER_PACKAGES=("fzf" "qemu-kvm" "qemu-img" "libvirt")
+OTHER_PACKAGES=("fzf" "gh")
 
 FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot" "org.prismlauncher.PrismLauncher")
 
@@ -54,16 +54,6 @@ sudo dnf copr enable atim/starship -yq
 sudo dnf copr enable scottames/ghostty -yq
 sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq
-sudo tee -a /etc/yum.repos.d/vscodium.repo <<'EOF'
-[gitlab.com_paulcarroty_vscodium_repo]
-name=gitlab.com_paulcarroty_vscodium_repo
-baseurl=https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/rpms/
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg
-metadata_expire=1h
-EOF
 
 # Perform a database update
 echo "Updating database"
@@ -154,15 +144,14 @@ wget -O https://gitlab.com/kanixos/dotfiles/-/raw/54cdb2d58da4075b8a798b7a31bcb6
 if [[ "$XDG_CURRENT_DESKTOP" == "GNOME" ]]; then
   echo "GNOME Desktop Environment detected, performing GNOME configurations"
   for i in {1..9}; do
+    gsettings set org.gnome.shell.keybindings switch-to-application-$i "[]"
     gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-$i "['<Super>$i']"
   done
   gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 fi
 
 # Create my special directories
-mkdir -p /home/$USER/repos/personal
-mkdir -p /home/$USER/repos/ai-foundry
-mkdir -p /home/$USER/University
+mkdir -p /home/$USER/repos
 mkdir -p /home/$USER/ObsidianVault
 
 #####################

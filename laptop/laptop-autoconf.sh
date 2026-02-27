@@ -4,11 +4,11 @@ TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
 
-GUI_APPS=("brave-browser" "mullvad-vpn" "qbittorrent" "vlc")
+GUI_APPS=("mullvad-vpn" "qbittorrent" "vlc")
 
-OTHER_PACKAGES=("fzf" "gh")
+OTHER_PACKAGES=("fd" "fzf" "gh")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot" "app.zen_browser.zen")
 
 cat <<EOF
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⡤⠤⠤⠤⠤⠤⢤⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -52,7 +52,6 @@ sudo dnf install dnf-plugins-core -yq
 echo "Adding in third-party repositories"
 sudo dnf copr enable atim/starship -yq
 sudo dnf copr enable scottames/ghostty -yq
-sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo -yq
 sudo dnf config-manager addrepo --from-repofile=https://repository.mullvad.net/rpm/stable/mullvad.repo -yq
 
 # Perform a database update
@@ -121,16 +120,23 @@ rm -rf ~/.config/nvim/.git
 # Set LazyVim color theme to Gruvbox
 cat >>/home/$USER/.config/nvim/lua/plugins/colorscheme.lua <<EOF
 return {
-  -- add gruvbox
-  { "ellisonleao/gruvbox.nvim" },
+  {
+    "navarasu/onedark.nvim",
+    priority = 1000, -- Ensure it loads first
+    config = function()
+      require("onedark").setup({
+        style = "dark",
+      })
+      require("onedark").load()
+    end,
+  },
 
-  -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox",
+      colorscheme = "onedark",
     },
-  }
+  },
 }
 EOF
 

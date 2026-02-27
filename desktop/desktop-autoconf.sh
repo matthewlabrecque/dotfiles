@@ -4,11 +4,11 @@ TOOLCHAINS=("clang" "gcc" "go" "julia" "rustup")
 
 TERMINAL_APPLICATIONS=("btop" "fastfetch" "ghostty" "git" "neovim" "rclone" "starship" "tailscale" "zsh")
 
-GUI_APPS=("brave-browser" "obs-studio" "mullvad-vpn" "qbittorrent" "steam" "vlc")
+GUI_APPS=("obs-studio" "mullvad-vpn" "qbittorrent" "steam" "vlc")
 
-OTHER_PACKAGES=("fzf" "gh")
+OTHER_PACKAGES=("fd" "fzf" "gh")
 
-FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "im.riot.Riot" "org.prismlauncher.PrismLauncher")
+FLATPAKS=("com.bitwarden.desktop" "md.obsidian.Obsidian" "org.prismlauncher.PrismLauncher" "im.riot.Riot" "app.zen_browser.zen")
 
 #####################
 ###     SETUP     ###

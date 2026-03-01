@@ -13,6 +13,7 @@ input {
     }
 
     touchpad {
+        off
         tap
         natural-scroll
     }
@@ -23,7 +24,10 @@ input {
 }
 
 // Display configuration
-/-output "eDP-1" {
+// Run 'niri msg outputs' to get the refresh rates for your deisplay
+
+// Laptop display
+output "eDP-1" {
     mode "1920x1080@60.000"
     scale 1
     transform "normal"
@@ -32,7 +36,7 @@ input {
 
 // This setting is for my external display
 output "HDMI-A-1" {
-    mode "1920x1080@143.981"
+    mode "1920x1080@119.982"
     scale 1
     transform "normal"
     position x=1280 y=0
@@ -51,7 +55,7 @@ layout {
 
     focus-ring {
         width 4
-        active-color "#47b5d6"
+        active-color "#b5b5b5"
         inactive-color "#505050"
     }
 
@@ -62,8 +66,10 @@ layout {
 
 // Startup processes
 spawn-at-startup "waybar"
-spawn-at-startup "swww-daemon"
-
+spawn-at-startup "thunar" "--daemon"
+spawn-at-startup "hypridle"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal"
+spawn-at-startup "/usr/libexec/xdg-desktop-portal-gtk"
 
 hotkey-overlay {
     skip-at-startup
@@ -86,6 +92,29 @@ window-rule {
     default-column-width {}
 }
 
+window-rule {
+  match app-id="app.zen_browser.zen"
+  open-maximized true
+}
+
+window-rule {
+  match app-id="obsidian"
+  open-maximized true
+}
+
+window-rule {
+    match app-id="impala-nm"
+    default-column-width { fixed 800; }
+    default-window-height { fixed 600; }
+    open-floating true
+}
+
+gestures {
+  hot-corners{
+    off
+  }
+}
+
 // Force rounded corners on windows
 window-rule {
     geometry-corner-radius 2
@@ -94,11 +123,11 @@ window-rule {
 
 binds {
     Mod+Return hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
-    Mod+D hotkey-overlay-title="Run an Application: rofi" { spawn "rofi" "-show" "drun"; }
-    Super+Shift+Escape hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
+    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+    Super+Shift+Escape hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
     Super+O hotkey-overlay-title="Run an Application: Obsidian" { spawn "flatpak" "run" "md.obsidian.Obsidian"; }
-    Super+F hotkey-overlay-title="Open the File Manager" { spawn "nautilus"; }
-    Mod+B hotkey-overlay-title="Open a Browser: brave" { spawn "brave-browser"; }
+    Super+F hotkey-overlay-title="Open the File Manager" { spawn "thunar"; }
+    Mod+B hotkey-overlay-title="Open a Browser: Zen" { spawn "flatpak" "run" "app.zen_browser.zen"; }
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-"; }
     XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
@@ -213,13 +242,11 @@ binds {
     Mod+W { toggle-column-tabbed-display; }
 
     Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Mod+Shift+S { screenshot; }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
 
     Mod+Shift+P { power-off-monitors; }
 }

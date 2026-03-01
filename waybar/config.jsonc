@@ -1,0 +1,111 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 4,
+  "modules-left": [
+    "custom/fedora",
+    "niri/workspaces"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "tray",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "battery",
+    "power-profiles-daemon",
+  ],
+  // Modules configuration
+  "custom/fedora": {
+    "format": "  ",
+    "tooltip": false
+  },
+
+  "niri/workspaces": {
+    "format": "{icon}",
+    "all-outputs": true,
+    "format-icons": {
+      "active": "○",
+      "default": "○",
+      "focused": "●",
+      "urgent": "◉"
+    }
+  },
+  "tray": {
+    "spacing": 10
+  },
+  "clock": {
+    "format": "{:%A %H:%M}",
+    "timezone": "America/New_York",
+    "tooltip": false
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-discharging": "{icon}",
+    "format-charging": "{icon}",
+    "format-plugged": "",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "󰂅",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 25,
+      "critical": 15
+    }
+  },
+ "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "ghostty --class=impala-nm -e impala-nm"
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "on-click": "ghostty --class=wiremix -e wiremix"
+  },
+  "bluetooth": {
+    "format": "",
+    "format-off": "󰂲",
+    "format-connected": "󰂱",
+    "format-disabled": "󰂲",
+    "tooltip": true,
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "ghostty --class=bluetui -e bluetui"
+  },
+}

@@ -1,5 +1,4 @@
 command = /bin/zsh
 font-family = "BlexMono Nerd Font"
 font-size = 13
-theme = Gruvbox Dark
-window-decoration = false
+theme = Atom One Dark

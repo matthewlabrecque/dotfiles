@@ -1,0 +1,17 @@
+input {
+    keyboard {
+        xkb {
+            options "caps:escape"
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+    }
+
+    mouse {
+        natural-scroll
+    }
+}

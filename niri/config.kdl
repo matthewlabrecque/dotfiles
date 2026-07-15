@@ -1,0 +1,12 @@
+// Niri Configuration File
+// Contains mappings to all submodules
+
+include "modules/input.kdl"               // Controls keyboard, mouse, and trackpac
+include "modules/display.kdl"             // Display configuration
+include "modules/window-layout.kdl"       // Window layout configuration
+include "modules/window-rules.kdl"        // Window rules
+include "modules/keybinds.kdl"            // Keybinds
+include "modules/startup-processes.kdl"   // Startup processes
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png" // Screenshot path
+
+include "noctalia.kdl"

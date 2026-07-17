@@ -30,5 +30,6 @@ layout {
 recent-windows {
     highlight {
         active-color "#ffb2b7"
-        urgent-color "#ffb4ab" }
+        urgent-color "#ffb4ab"
+    }
 }

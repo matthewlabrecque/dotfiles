@@ -75,6 +75,9 @@ fi
 sudo pacman -S --needed --noconfirm "${PACMAN_PKGS[@]}"
 paru -S --needed --noconfirm "${AUR_PKGS[@]}"
 
+# Install Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
+
 # Write GreetD configuration
 tee /etc/greetd/config.toml << EOF
 [terminal]

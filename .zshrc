@@ -15,8 +15,9 @@ compinit
 eval "$(starship init zsh)"
 
 # Node Version Management
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+source /usr/share/nvm/init-nvm.sh
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Aliases
@@ -33,3 +34,4 @@ alias cat="bat"
 alias grep="rg"
 alias convopus="source $HOME/scripts/convert-to-opus.sh"
 alias qsync="cd $HOME/Projects/hortusdigitalis && python $HOME/scripts/quartz-sync.py && npx quartz sync"
+export PATH="$HOME/.local/bin:$PATH"

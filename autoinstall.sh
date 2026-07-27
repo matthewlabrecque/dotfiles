@@ -38,9 +38,11 @@ PACMAN_PKGS=(
 		"rustup"
 		"starship"
 		"tailscale"
+		"thinkfan"
 		"tree"
 		"ttf-cascadia-code-nerd"
 		"typst"
+		"ufw"
 		"vim"
 		"vlc"
 		"vlc-plugins-all"
@@ -55,7 +57,6 @@ AUR_PKGS=(
 		"noctalia-bin"
 		"gostow-bin"
 		"zettk-cli-bin"
-		"thinkfan"
 )
 # Perform full system update before continuing
 sudo pacman -Syu --noconfirm
@@ -67,7 +68,7 @@ cd /home/"$USER"
 if ! command -v paru &>/dev/null; then
 		PARU_BUILD_DIR="$(mktemp -d)"
 		git clone https://aur.archlinux.org/paru.git "$PARU_BUILD_DIR/paru"
-		(cd "$PARU_BUILD_DIR/paru" && makepkg -si --noconfim) # Note that this is a subshell
+		(cd "$PARU_BUILD_DIR/paru" && makepkg -si --noconfirm) # Note that this is a subshell
 		rm -rf "$PARU_BUILD_DIR"
 fi
 
@@ -79,7 +80,7 @@ paru -S --needed --noconfirm "${AUR_PKGS[@]}"
 curl -fsSL https://claude.ai/install.sh | bash
 
 # Write GreetD configuration
-tee /etc/greetd/config.toml << EOF
+sudo tee /etc/greetd/config.toml << EOF
 [terminal]
 # The VT to run the greeter on. Can be "next", "current" or a number
 # designating the VT.
@@ -102,11 +103,10 @@ command = "tuigreet --time --remember --cmd niri-session"
 user = "$USER"
 EOF
 
-systemctl enable greetd.service
+sudo systemctl enable greetd.service
 
 # Install LSPs for Neovim
 rustup default stable
-rustup install
 rustup component add rust-analyzer
 go install golang.org/x/tools/gopls@latest
 

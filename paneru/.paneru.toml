@@ -1,0 +1,75 @@
+# Paneru Configuration
+# Refactored from ../aerospace/aerospace.toml.
+# Install to ~/.paneru.toml (for example, with `stow paneru`).
+#
+# Paneru uses virtual workspace rows within each native macOS Space. Numbered
+# workspace bindings below therefore target Paneru's virtual workspaces.
+
+[options]
+# Match the previous AeroSpace configuration: focus changes do not move the
+# pointer, and moving the pointer alone does not change focus.
+focus_follows_mouse = false
+mouse_follows_focus = false
+
+# Paneru's scrolling strip is the native equivalent of the layout the old
+# configuration approximated with AeroSpace's tree-based tiles.
+preset_column_widths = [0.25, 0.33, 0.5, 0.66, 0.75, 1.0]
+reap_empty_workspaces = false
+virtual_workspace_animations = false
+insert_windows_mid_strip = true
+
+# Match the old 8 px outer gaps. Paneru does not have a global inner-gap
+# setting; per-application padding can be added under [windows] if desired.
+[padding]
+top = 8
+bottom = 8
+left = 8
+right = 8
+
+[bindings]
+# Focus windows within the current workspace.
+window_focus_west = "alt - h"
+window_focus_east = "alt - l"
+window_focus_north = "alt - k"
+window_focus_south = "alt - j"
+
+# Move the focused window within the current workspace.
+window_swap_west = "ctrl + shift - h"
+window_swap_east = "ctrl + shift - l"
+
+# Switch directly to virtual workspaces 1-9.
+window_virtualnum_1 = "ctrl - 1"
+window_virtualnum_2 = "ctrl - 2"
+window_virtualnum_3 = "ctrl - 3"
+window_virtualnum_4 = "ctrl - 4"
+window_virtualnum_5 = "ctrl - 5"
+window_virtualnum_6 = "ctrl - 6"
+window_virtualnum_7 = "ctrl - 7"
+window_virtualnum_8 = "ctrl - 8"
+window_virtualnum_9 = "ctrl - 9"
+
+# Send the focused window to virtual workspace 1-9 without following it.
+window_virtualsendnum_1 = "ctrl + shift - 1"
+window_virtualsendnum_2 = "ctrl + shift - 2"
+window_virtualsendnum_3 = "ctrl + shift - 3"
+window_virtualsendnum_4 = "ctrl + shift - 4"
+window_virtualsendnum_5 = "ctrl + shift - 5"
+window_virtualsendnum_6 = "ctrl + shift - 6"
+window_virtualsendnum_7 = "ctrl + shift - 7"
+window_virtualsendnum_8 = "ctrl + shift - 8"
+window_virtualsendnum_9 = "ctrl + shift - 9"
+
+# Layout controls with direct Paneru equivalents.
+window_manage = "ctrl + alt - t"
+window_fullwidth = "ctrl + alt - f"
+window_shrink = "ctrl + alt - minus"
+window_grow = "ctrl + alt - equal"
+window_center = "ctrl + alt - c"
+window_nextdisplay = "ctrl + alt - n"
+restart = "ctrl + alt - r"
+
+# Paneru bindings only invoke built-in Paneru actions. Application launchers,
+# closing windows, Mission Control, and System Settings shortcuts from the old
+# AeroSpace config should remain native macOS/Raycast shortcuts (or use skhd).
+# Likewise, Paneru window rules cannot automatically toggle full-width mode for
+# selected apps; session restore preserves their last layout instead.

@@ -2,37 +2,69 @@
 
 set -euo pipefail
 
+script_dir="${0:A:h}"
+brew_bin="/opt/homebrew/bin/brew"
+brew_shellenv='eval "$(/opt/homebrew/bin/brew shellenv)"'
 
-# Perform full system update before continuing
-sudo pacman -Syu --noconfirm
+# Install Xcode Command Line Tools if not already installed
+if ! xcode-select -p &>/dev/null; then
+  echo "Installing Xcode Command Line Tools..."
+  xcode-select --install
+  for _ in {1..60}; do
+    if xcode-select -p &>/dev/null; then
+      break
+    fi
+    sleep 5
+  done
+  xcode-select -p &>/dev/null || {
+    echo "Xcode Command Line Tools were not installed within five minutes."
+    exit 1
+  }
+fi
 
-# Ensure we're in the home directory
-cd /home/"$USER"
+# Install Homebrew if not already installed
+if [[ ! -x "$brew_bin" ]]; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 
-# Install packages
+eval "$("$brew_bin" shellenv)"
+grep -qxF "$brew_shellenv" "$HOME/.zprofile" 2>/dev/null ||
+  echo "$brew_shellenv" >> "$HOME/.zprofile"
+grep -qxF 'export PATH="$HOME/go/bin:$PATH"' "$HOME/.zprofile" 2>/dev/null ||
+  echo 'export PATH="$HOME/go/bin:$PATH"' >> "$HOME/.zprofile"
 
-# Install Claude Code
-curl -fsSL https://claude.ai/install.sh | bash
+# Install applications via Brewfile
+if [[ -f "$script_dir/Brewfile" ]]; then
+  echo "Installing applications from Brewfile..."
+  "$brew_bin" bundle --file="$script_dir/Brewfile"
+else
+  echo "Brewfile not found at $script_dir/Brewfile"
+  exit 1
+fi
 
 # Install LSPs for Neovim
 rustup default stable
 rustup component add rust-analyzer
-go install golang.org/x/tools/gopls@latest
-
-# Clone and move dotfiles
-git clone https://github.com/matthewlabrecque/dotfiles.git 
-(cd dotfiles && gostow *)
+npm install --global pyright
 
 # Create additional directories
-mkdir -p scripts University
+mkdir -p "$HOME/scripts" "$HOME/University"
 
-# Enable the firewall
-sudo ufw enable
+# Disable Press and Hold so keyboard navigation works
+defaults write -g ApplePressAndHoldEnabled -bool false
 
-# Reboot system
 echo "Configuration complete!"
-for i in {5..0}; do
-		echo "Rebooting system in "$i" seconds"
-		sleep 1
-done
-reboot
+echo "Programs that need to be installed manually:"
+echo "  - Logic Pro"
+echo "  - Final Cut Pro"
+echo "  - FL Studio 26"
+echo "  - Fantastical"
+echo ""
+if [[ -t 0 ]]; then
+  read -q "reply?Reboot now? [y/N] "
+  echo
+  if [[ "$reply" == "y" || "$reply" == "Y" ]]; then
+    sudo reboot
+  fi
+fi

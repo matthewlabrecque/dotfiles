@@ -1,4 +1,3 @@
-tap "nikitabobko/tap"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
@@ -29,8 +28,8 @@ brew "ripgrep"
 brew "rustup"
 # Cross-shell prompt for astronauts
 brew "starship"
-# AeroSpace is an i3-like tiling window manager for macOS
-cask "nikitabobko/tap/aerospace", trusted: true
+# Niri-like scrolling window manager for macOS
+brew "paneru"
 # Memory training application
 cask "anki"
 cask "font-caskaydia-cove-nerd-font"
@@ -38,6 +37,10 @@ cask "font-caskaydia-cove-nerd-font"
 cask "ghostty"
 # Web browser
 cask "librewolf"
+# Chromium-based web browser
+cask "helium-browser"
+# Knowledge base that works on local Markdown files
+cask "obsidian"
 # Music tagger
 cask "musicbrainz-picard"
 # Peer to peer Bitorrent client
@@ -46,12 +49,17 @@ cask "qbittorrent"
 cask "tailscale-app"
 # Music streaming service with high fidelity sound and hi-def video quality
 cask "tidal"
+# Application launcher and productivity tool
+cask "raycast"
+# Virtual machine manager
+cask "utm"
 # Custom Discord App
 cask "vesktop"
 # Multimedia player
 cask "vlc"
 # Binary releases of VS Code without MS branding/telemetry/licensing
 cask "vscodium"
+# FL Studio has no official Homebrew cask; install it manually from Image-Line.
 go "golang.org/x/tools/gopls"
 npm "@earendil-works/pi-coding-agent"
 npm "corepack"

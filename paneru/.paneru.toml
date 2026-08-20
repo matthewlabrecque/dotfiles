@@ -1,33 +1,24 @@
-# Paneru Configuration
-# Refactored from ../aerospace/aerospace.toml.
-# Install to ~/.paneru.toml (for example, with `stow paneru`).
-#
 # Paneru uses virtual workspace rows within each native macOS Space. Numbered
 # workspace bindings below therefore target Paneru's virtual workspaces.
 
 [options]
-# Match the previous AeroSpace configuration: focus changes do not move the
-# pointer, and moving the pointer alone does not change focus.
 focus_follows_mouse = false
 mouse_follows_focus = false
 
 # Paneru's scrolling strip is the native equivalent of the layout the old
 # configuration approximated with AeroSpace's tree-based tiles.
-preset_column_widths = [0.25, 0.33, 0.5, 0.66, 0.75, 1.0]
+preset_column_widths = [0.25, 0.5, 0.75, 1.0] 
 reap_empty_workspaces = false
-virtual_workspace_animations = false
+virtual_workspace_animations = true
 insert_windows_mid_strip = true
 
-# Match the old 8 px outer gaps. Paneru does not have a global inner-gap
-# setting; per-application padding can be added under [windows] if desired.
 [padding]
-top = 8
-bottom = 8
-left = 8
-right = 8
+top = 5
+bottom = 5
+left = 5
+right = 5
 
 [bindings]
-# Focus windows within the current workspace.
 window_focus_west = "alt - h"
 window_focus_east = "alt - l"
 window_focus_north = "alt - k"
@@ -67,9 +58,3 @@ window_grow = "ctrl + alt - equal"
 window_center = "ctrl + alt - c"
 window_nextdisplay = "ctrl + alt - n"
 restart = "ctrl + alt - r"
-
-# Paneru bindings only invoke built-in Paneru actions. Application launchers,
-# closing windows, Mission Control, and System Settings shortcuts from the old
-# AeroSpace config should remain native macOS/Raycast shortcuts (or use skhd).
-# Likewise, Paneru window rules cannot automatically toggle full-width mode for
-# selected apps; session restore preserves their last layout instead.

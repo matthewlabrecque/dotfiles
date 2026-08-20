@@ -1,0 +1,19 @@
+# Ghostty configuration
+# Converted from foot.ini
+# Docs: https://ghostty.org/docs/config
+
+# Theme (equivalent of foot's: include=~/.config/foot/themes/noctalia)
+# Place this file in ~/.config/ghostty/themes/noctalia
+theme = noctalia
+
+# Shell to run (foot: shell=/usr/bin/zsh)
+command = /usr/bin/zsh
+
+# Font (foot: font=CaskaydiaCove NF:size=12)
+font-family = CaskaydiaCove NF
+font-size = 12
+
+# Window transparency (foot: alpha=0.9)
+background-opacity = 0.9
+# Optional on macOS for a frosted-glass effect:
+# background-blur-radius = 20

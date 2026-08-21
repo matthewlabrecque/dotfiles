@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 set -euo pipefail
 
@@ -54,6 +54,9 @@ mkdir -p "$HOME/scripts" "$HOME/University"
 # Disable Press and Hold so keyboard navigation works
 defaults write -g ApplePressAndHoldEnabled -bool false
 
+# Add in dotfiles to correct locations
+
+
 echo "Configuration complete!"
 echo "Programs that need to be installed manually:"
 echo "  - Logic Pro"
@@ -62,7 +65,7 @@ echo "  - FL Studio 26"
 echo "  - Fantastical"
 echo ""
 if [[ -t 0 ]]; then
-  read -q "reply?Reboot now? [y/N] "
+  read -q "reply?Reboot now? [y/N]"
   echo
   if [[ "$reply" == "y" || "$reply" == "Y" ]]; then
     sudo reboot
